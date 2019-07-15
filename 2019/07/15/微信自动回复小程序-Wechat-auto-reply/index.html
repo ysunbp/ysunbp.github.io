@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          SUN Yushi
+          &lt;微信自动回复小程序 Wechat auto reply&gt; - SUN Yushi
         
     </title>
 
-    <link rel="canonical" href="https://ysunbp.github.io/archives/2019/07/">
+    <link rel="canonical" href="https://ysunbp.github.io/2019/07/15/微信自动回复小程序-Wechat-auto-reply/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -69,8 +69,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/undefined')
-            /*page*/
+            background-image: url('')
+            /*post*/
         
     }
     
@@ -87,10 +87,22 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>SUN Yushi Steve</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">This is his personal homepage.</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Wechat" title="Wechat">Wechat</a>
+                            
+                              <a class="tag" href="/tags/#Autoreply" title="Autoreply">Autoreply</a>
+                            
+                              <a class="tag" href="/tags/#微信" title="微信">微信</a>
+                            
+                        </div>
+                        <h1>&lt;微信自动回复小程序 Wechat auto reply&gt;</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by SUN Yushi on
+                            2019-07-15
+                        </span>
                     </div>
                 
 
@@ -193,193 +205,151 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <!-- 归档列表 -->
-            
-            
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-             <!-- 归档列表 -->
+                <p>#设置一个不走心的自动回复（生日，节庆必备）</p>
+<blockquote>
+<p>思路来源：<a href="https://blog.csdn.net/qq_40820862/article/details/82966193" target="_blank" rel="noopener">https://blog.csdn.net/qq_40820862/article/details/82966193</a></p>
+<p>技术支持：<a href="https://itchat.readthedocs.io/zh/latest/" target="_blank" rel="noopener">https://itchat.readthedocs.io/zh/latest/</a></p>
+</blockquote>
+<p>微信这个软件在我们日常社交中占有很重要的位置，然而这个软件却缺少一个神器般的功能：自动回复。有时我们遇到群发消息或是临时有事在忙的时候，缺少这么一个自动回复功能就会给我们的交流带来很大的麻烦。因此我参考了网上一些教程和documentation，基于itchat这个开源的微信个人号接口制作了一个小的python程序，希望能给各位的生活带来帮助。</p>
+<p>##安装module</p>
+<p>首先在pycharm里面添加module: itchat</p>
+<p>我使用的python版本是Python 3.7</p>
+<p>导入time和itchat模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> itchat</span><br></pre></td></tr></table></figure>
+<p>##构建回复函数</p>
+<p>这里我的设计是将接收到的消息转发到文件传输助手，然后对发消息的人进行回复</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@itchat.msg_register(itchat.content.TEXT)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reply</span><span class="params">(msg)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> msg[<span class="string">'FromUserName'</span>] == myUserName:</span><br><span class="line">        <span class="comment">#check if the message if sent from me</span></span><br><span class="line">        itchat.send_msg(<span class="string">u"[%s]收到好友@%s 的信息： %s\n"</span> %(time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime(msg[<span class="string">'CreateTime'</span>])),msg[<span class="string">'User'</span>][<span class="string">'NickName'</span>],msg[<span class="string">'Text'</span>]), <span class="string">'filehelper'</span>)</span><br><span class="line">        <span class="comment">#send the messages to file-helper for record</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'[自动回复][捂脸]您好，我现在有事不在，一会儿再和您联系~ \n已经收到您的信息：%s\n'</span> % (msg[<span class="string">'Text'</span>])</span><br><span class="line">    <span class="comment">#auto reply</span></span><br></pre></td></tr></table></figure>
+<p>这里注意一定要加入检查发件人是否是自己这一条！否则你的文件传输助手中会多出很多自己说的话。</p>
+<p>希望有其他效果的朋友可以根据itchat的documentation自行设计，这里仅仅讲述最基础的实现方法。</p>
+<p>（在不接入AI的前提下，假如想让回复效果以假乱真可以考虑添加一个随机回复，使用 “嗯”， “好”， “哦”，甚至是表情hhh）</p>
+<p>##main函数的构造</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    itchat.auto_login()</span><br><span class="line">    myUserName = (itchat.search_friends()).get(<span class="string">'UserName'</span>)</span><br><span class="line">    <span class="comment">#get my user name</span></span><br><span class="line">    itchat.run()</span><br></pre></td></tr></table></figure>
+<p>大概就是这样啦！</p>
+<p>##测试</p>
+<p>首先运行程序，会自动跳出一个二维码，扫码登陆会提示web登陆微信，然后自动回复就开始工作啦！</p>
 
-            
-            <div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2019">
-                    <span class="tag-text">2019</span>
-                </span>
-                <ul>
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    07-15
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2019/07/15/微信自动回复小程序-Wechat-auto-reply/" style="color: #0085a1">
-                        <span>
-                            <微信自动回复小程序 Wechat auto reply>
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    07-14
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2019/07/14/hello-world/" style="color: #0085a1">
-                        <span>
-                            Hello World
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/07/14/hello-world/" data-toggle="tooltip" data-placement="top" title="Hello World">Next Post &rarr;</a>
+                        </li>
+                    
                 </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
             </div>
             
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
 
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Wechat" title="Wechat">Wechat</a>
+                        
+                          <a class="tag" href="/tags/#Autoreply" title="Autoreply">Autoreply</a>
+                        
+                          <a class="tag" href="/tags/#微信" title="微信">微信</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://sausage-song.github.io/blog/" target="_blank">Sizhe SONG</a></li>
+                    
+                </ul>
+                
+            </div>
         </div>
     </div>
-</div>
+</article>
 
-                <!-- 如果开启评论功能 -->
-                
-            </div>
 
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        <!-- Featured Tags -->
 
-<section>
-    <!-- no hr -->
-    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-        
-            
-        
-            
-        
-    </div>
-</section>
 
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/about/">ABOUT ME</a></h5>
-    <div class="short-about">
 
-        
-            <img id = "avatar_pic" src="/img/img.jpg" />
-        
 
-        
-            <p>Hi, i&#39;m Steve. Currently a Computer Science and Mathematics student in HK. Nice to meet you guys and hope to make friends as well as learn from you guys!</p>
-        
 
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-            
-            
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
-            
-
-            
-
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/ysunbp">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-            
-        </ul>
-    </div>
-</section>
-        <hr>
-    
-        
-  <h5>RECENT POSTS</h3>
-  <div class="widget">
-    <ul>
-      
-        <li>
-          <a href="/2019/07/15/微信自动回复小程序-Wechat-auto-reply/">&lt;微信自动回复小程序 Wechat auto reply&gt;</a>
-        </li>
-      
-        <li>
-          <a href="/2019/07/14/hello-world/">Hello World</a>
-        </li>
-      
-    </ul>
-  </div>
-
-        <hr>
-    
-        <!-- Friends Blog -->
-
-<h5>FRIENDS</h5>
-<ul class="list-inline">
-
-    
-        <li><a href="https://sausage-song.github.io/blog/" target="_blank">Sizhe SONG</a></li>
-    
-</ul>
-
-        <hr>
-    
-        
-    <h5>ARCHIVES</h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">2</span></li></ul>
-    </div>
-
-        <hr>
-    
-</div>
-
-        
-    </div>
-</div>
 
 
     <!-- Footer -->

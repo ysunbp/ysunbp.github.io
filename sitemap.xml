@@ -3,12 +3,17 @@
 
     <sitemap>
         <loc>https://ysunbp.github.io/post-sitemap.xml</loc>
-        <lastmod>2019-07-14T10:24:57.015Z</lastmod>
+        <lastmod>2019-07-15T14:35:13.388Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>https://ysunbp.github.io/page-sitemap.xml</loc>
         <lastmod>2019-07-14T14:36:41.813Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://ysunbp.github.io/tag-sitemap.xml</loc>
+        <lastmod>2019-07-15T14:35:13.388Z</lastmod>
     </sitemap>
 
 </sitemapindex>

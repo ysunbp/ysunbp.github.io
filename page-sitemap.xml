@@ -7,6 +7,13 @@
     </url>
     
     <url>
+        <loc>https://ysunbp.github.io/about/</loc>
+        <lastmod>2019-07-15T15:01:31.523Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://ysunbp.github.io/tags/</loc>
         <lastmod>2019-07-14T14:36:41.813Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -16,13 +23,6 @@
     <url>
         <loc>https://ysunbp.github.io/archive/</loc>
         <lastmod>2019-07-14T14:31:57.169Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>https://ysunbp.github.io/about/</loc>
-        <lastmod>2019-07-14T14:28:46.098Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

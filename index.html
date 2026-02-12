@@ -56,13 +56,13 @@
               <img src="paper-images/ASAP_SQL_teaser.png" alt="ASAP" width="160" height="120">
             </td>
             <td width="75%" valign="middle">
-                <papertitle>ASAP-SQL: Talking to the Data via Active Schema-linking and Agentic Profiling</papertitle>
+                <papertitle>APEX-SQL: Talking to the data via Agentic Exploration for Text-to-SQL</papertitle>
               <br>
               Bowen Cao, Weibin Liao, <strong>Yushi Sun</strong>+, Dong Fang+, Haitao Li, Wai Lam
               <br>
               <br>
               <em>KDD under review</em>, 2026, + indicates correspondence.
-              <p>We propose ASAP-SQL, an Agentic Text-to-SQL Framework that shifts the paradigm from passive translation to active interrogation. Our framework employs a hypothesis-verification loop to ground model reasoning in empirical data evidence. In the schema linking phase, we combine logical planning with dual-pathway pruning to efficiently reduce the search space, followed by parallel agentic exploration to validate the functional roles of candidate tables and a global synthesis step to ensure topological connectivity. For SQL generation, we introduce a deterministic retrieval mechanism to provide query-dependent guidance, enabling dynamic agentic exploration to resolve value ambiguities and validate implementation logic.</p>
+              <p>We propose APEX-SQL, an Agentic Text-to-SQL Framework that shifts the paradigm from passive translation to agentic exploration. Our framework employs a hypothesis-verification loop to ground model reasoning in real data. In the schema linking phase, we use logical planning to verbalize hypotheses, dual-pathway pruning to reduce the search space, and parallel data profiling to validate column roles against real data, followed by global synthesis to ensure topological connectivity. For SQL generation, we introduce a deterministic mechanism to retrieve exploration directives, allowing the agent to effectively explore data distributions, refine hypotheses, and generate semantically accurate SQLs.</p>
               <br>
               <a href="./apex_sql.pdf">
                 paper

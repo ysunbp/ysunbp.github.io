@@ -1,422 +1,752 @@
-<!DOCTYPE HTML>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yushi SUN | 孙宇石</title>
+    <meta name="description" content="Yushi SUN — Senior Researcher at Tencent Games LightSpeed Studios, Ph.D. from HKUST. Research in Data Management, RAG, Agent Memory.">
+    <meta name="google-site-verification" content="google46d4fa94f81c2c68.html">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========== CSS Reset & Base ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <title>Yushi SUN</title>
-  
-  <meta name="author" content="Yushi SUN">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+        :root {
+            --bg: #fafafa;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --text-tertiary: #8888a8;
+            --accent: #2d5be3;
+            --accent-light: #eef3ff;
+            --border: #e8e8ef;
+            --tag-bg: #f0f1f5;
+            --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+            --radius: 12px;
+            --max-width: 780px;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f1a;
+                --bg-card: #1a1a2e;
+                --text-primary: #e8e8f0;
+                --text-secondary: #a8a8c0;
+                --text-tertiary: #6a6a88;
+                --accent: #5b8aff;
+                --accent-light: #1a2040;
+                --border: #2a2a40;
+                --tag-bg: #1e1e35;
+                --shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15.5px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        a:hover { opacity: 0.75; }
+
+        /* ========== Layout ========== */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Navigation ========== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background 0.3s;
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 52px;
+        }
+        nav .nav-name {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        nav .nav-links {
+            display: flex;
+            gap: 6px;
+        }
+        nav .nav-links a {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+            background: var(--accent-light);
+            opacity: 1;
+        }
+
+        /* ========== Hero Section ========== */
+        .hero {
+            padding: 64px 0 48px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        .hero-avatar {
+            flex-shrink: 0;
+        }
+        .hero-avatar img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border);
+            transition: border-color 0.3s;
+        }
+        .hero-avatar img:hover {
+            border-color: var(--accent);
+        }
+        .hero-info h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        .hero-info .name-cn {
+            font-size: 16px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+        .hero-info .position {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .hero-info .position strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .hero-info .bio {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            max-width: 520px;
+        }
+        .hero-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .hero-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            background: var(--bg-card);
+        }
+        .hero-links a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            opacity: 1;
+        }
+        .hero-links a svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ========== Section Common ========== */
+        section {
+            padding: 36px 0;
+        }
+        section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        section h2 .section-icon {
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        /* ========== Research Interest ========== */
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .research-tags .tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--tag-bg);
+            border-radius: 20px;
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .research-tags .tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ========== Publications ========== */
+        .pub-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .pub-item:first-child { padding-top: 0; }
+        .pub-item:last-child { border-bottom: none; }
+
+        .pub-title {
+            font-size: 15.5px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+        .pub-title a {
+            color: var(--text-primary);
+        }
+        .pub-title a:hover {
+            color: var(--accent);
+        }
+        .pub-meta {
+            font-size: 13.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+        .pub-meta strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .pub-venue {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--accent-light);
+            color: var(--accent);
+            margin-right: 6px;
+            letter-spacing: 0.02em;
+        }
+        .pub-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .pub-links a {
+            font-size: 12.5px;
+            color: var(--text-tertiary);
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .pub-links a:hover { color: var(--accent); opacity: 1; }
+        .pub-links svg { width: 13px; height: 13px; }
+
+        /* ========== Awards ========== */
+        .awards-list {
+            list-style: none;
+        }
+        .awards-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .awards-list li:last-child { border-bottom: none; }
+        .awards-list .award-year {
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            min-width: 45px;
+        }
+        .awards-list .award-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* ========== Contact ========== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color 0.2s;
+        }
+        .contact-item:hover { border-color: var(--accent); }
+        .contact-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+        .contact-item .contact-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        .contact-item .contact-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .contact-item a {
+            color: var(--text-primary);
+        }
+        .contact-item a:hover { color: var(--accent); opacity: 1; }
+
+        /* ========== Visitor Counter ========== */
+        .visitor-counter {
+            text-align: center;
+            padding: 28px 0 40px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .visitor-counter .count {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--accent);
+            font-size: 15px;
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            text-align: center;
+            padding: 20px 0 32px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 640px) {
+            .hero {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 48px 0 36px;
+            }
+            .hero-info .bio { margin-left: auto; margin-right: auto; }
+            .hero-links { justify-content: center; }
+            .hero-info h1 { font-size: 26px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            section h2 { font-size: 17px; }
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero, section, .visitor-counter {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+        section:nth-child(2) { animation-delay: 0.05s; }
+        section:nth-child(3) { animation-delay: 0.1s; }
+        section:nth-child(4) { animation-delay: 0.15s; }
+        section:nth-child(5) { animation-delay: 0.2s; }
+        .visitor-counter { animation-delay: 0.25s; }
+    </style>
 </head>
-
 <body>
-  <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-    <tr style="padding:0px">
-      <td style="padding:0px">
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr style="padding:0px">
-            <td style="padding:2.5%;width:63%;vertical-align:middle">
-              <p style="text-align:center">
-                <name>Yushi SUN</name>
-              </p>
-              <p>I am currently a senior researcher at LightSpeed Studio, Tencent Games <a href="https://join.qq.com/qingyun.html">(Project Up, 青云计划)</a>. I obtained my PhD degree from <a href="https://hkust.edu.hk/">Hong Kong University of Science and Technology (HKUST)</a> in 2025, majored in <a href="https://cse.hkust.edu.hk/">Computer Science and Engineering</a>. My supervisor is <a href="https://cse.hkust.edu.hk/~leichen/">Prof. Lei CHEN</a>. I am fortunate to work with <a href="https://nantang.github.io/">Prof. Nan TANG</a> and <a href="https://lunadong.com/">Dr. Xin Luna Dong</a> during my PhD journey. 
-              </p>
-              <p>
-                I received the B.S. degree in Computer Science and Applied Mathematics from Hong Kong University of Science and Technology (HKUST) in 2021. More details of me are introduced in my <a href="cv.pdf">CV</a>|<a href="cv_chi.pdf">简历</a> (may be outdated).
-              </p>
-              <p style="text-align:center">
-                <a href="mailto:ysunbp@connect.ust.hk">Email</a> &nbsp/&nbsp
-                <a href="https://scholar.google.com/citations?user=j9ypp3QAAAAJ&hl=en">Google Scholar</a> &nbsp/&nbsp
-                <a href="https://github.com/ysunbp">Github</a> &nbsp/&nbsp
-                <a href="https://www.linkedin.com/in/%E5%AE%87%E7%9F%B3-%E5%AD%99-3112b818b/">Linkedin</a>
-              </p>
-            </td>
-            <td style="padding:2.5%;width:40%;max-width:40%">
-              <a href="photos/photo.jpg"><img style="width:100%;max-width:100%" alt="profile photo" src="photos/photo.jpg" class="hoverZoomLink"></a>
-            </td>
-          </tr>
-        </tbody></table>
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
-              <heading>Selected Publications and Preprints</heading>
-              <p>
-                My research interest lies in the following topics: Data Management (Data Annotation, Data Integration, and Data Organization), RAG, Agent Memory, and RL. My vision is to make data usable: starting from ensuring the annotation and preparation quality, to developing effective data organization paradigm, to improving usability of data in downstream applications (e.g., RAG). Here are the selected publications. Please check my <a href="https://scholar.google.com/citations?user=j9ypp3QAAAAJ&hl=en">Google Scholar</a> to get the full list of my publication. Feel free to drop me an email if you are interested in potential collaborations! :)
-              </p>
-            </td>
-          </tr>
-        </tbody></table>
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            
-           <tr bgcolor="#FFFFFF">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/figure1.png" alt="ChartCynics" width="180" height="120">
-            </td>
-            <td width="75%" valign="middle">
-                <papertitle>Navigating the Mirage: A Dual-Path Agentic Framework for Robust Misleading Chart Question Answering</papertitle>
-              <br>
-              Yanjie Zhang, Yafei Li, Rui Sheng, Zixin Chen, Yanna Lin, Huamin Qu, Lei Chen, <strong>Yushi Sun</strong>+
-              <br>
-              <br>
-              <em>Preprint, Under Review</em>, 2026, + indicates correspondence.
-              <p>Standard Vision-Language Models (VLMs) often fall for "visual sycophancy"—blindly trusting deceptive chart trends while ignoring actual data. To solve this, we introduce ChartCynics, an agentic framework that unmasks visual deception via a "skeptical" reasoning paradigm. It decouples perception from verification: a Diagnostic Vision Path detects structural anomalies, while an OCR-Driven Data Path grounds the exact numerical facts. An Agentic Summarizer then logically resolves any cross-modal conflicts. Optimized with deception-aware reinforcement learning, our 8B-parameter model achieves a SOTA 74.43% accuracy, successfully outperforming massive proprietary systems like Gemini-3.1-Pro. </p>
-              <br>
-              <a href="https://arxiv.org/abs/2603.28583">
-                paper
-              </a>
-              <br>
-              <p>[LLM Agent, MLLM]</p>
-              <br>
-            </td>
-          </tr>
+<!-- Navigation -->
+<nav>
+    <div class="container">
+        <span class="nav-name">Yushi Sun</span>
+        <div class="nav-links">
+            <a href="#publications">Publications</a>
+            <a href="#awards">Awards</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+</nav>
 
-          <tr bgcolor="#FFFFFF">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/ASAP_SQL_teaser.png" alt="APEX" width="160" height="120">
-            </td>
-            <td width="75%" valign="middle">
-                <papertitle>APEX-SQL: Talking to the data via Agentic Exploration for Text-to-SQL</papertitle>
-              <br>
-              Bowen Cao, Weibin Liao, <strong>Yushi Sun</strong>+, Dong Fang+, Haitao Li, Wai Lam
-              <br>
-              <br>
-              <em>Preprint, Under Review</em>, 2026, + indicates correspondence.
-              <p>We propose APEX-SQL, an Agentic Text-to-SQL Framework that shifts the paradigm from passive translation to agentic exploration. Our framework employs a hypothesis-verification loop to ground model reasoning in real data. In the schema linking phase, we use logical planning to verbalize hypotheses, dual-pathway pruning to reduce the search space, and parallel data profiling to validate column roles against real data, followed by global synthesis to ensure topological connectivity. For SQL generation, we introduce a deterministic mechanism to retrieve exploration directives, allowing the agent to effectively explore data distributions, refine hypotheses, and generate semantically accurate SQLs.</p>
-              <br>
-              <a href="https://arxiv.org/abs/2602.16720">
-                paper
-              </a>
-              <br>
-              <p>[LLM Agent]</p>
-              <br>
-            </td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/lakehopper.png" alt="LakeHopper" width="160" height="90">
-            </td>
-            <td width="75%" valign="middle">
-                <papertitle>LakeHopper: Cross Data Lakes Column Type Annotation through Model Adaptation</papertitle>
-              <br>
-              <strong>Yushi Sun</strong>, Xijia Li, Nan Tang, Quanqing Xu, Chuanhui Yang, <a href="https://www.cse.ust.hk/~leichen/" class="black-link">Lei Chen</a>
-              <br>
-              <br>
-              <em>Preprint, Under Review</em>, 2026
-              <p>We introduce a novel PLM-LLM collaborated cross data lake column type annotation approach that significantly reduces the generalization cost of domain specifc column type annotation models.</p>
-              <br>
-              <a href="https://arxiv.org/abs/2602.08793">
-                paper
-              </a>
-              
-              
-              <br>
-              <p>[Data Preparation]</p>
-              <br>
-            </td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/medkgi.png" alt="MedKGI" width="160" height="120">
-            </td>
-            <td width="75%" valign="middle">
-                <papertitle>MedKGI: Iterative Differential Diagnosis with Medical Knowledge Graphs and Information-Guided Inquiring</papertitle>
-              
-              <br>
+<!-- Hero -->
+<div class="container">
+    <div class="hero">
+        <div class="hero-avatar">
+            <img src="photos/photo.jpg" alt="Yushi Sun" onerror="this.src='https://ui-avatars.com/api/?name=Yushi+Sun&background=2d5be3&color=fff&size=280&font-size=0.35'">
+        </div>
+        <div class="hero-info">
+            <h1>Yushi Sun</h1>
+            <div class="name-cn">孙宇石</div>
+            <div class="position"><strong>Senior Researcher</strong> at Tencent Games · LightSpeed Studios</div>
+            <div class="position" style="margin-top: -4px;">Ph.D. from HKUST (2025), advised by <a href="https://www.cse.ust.hk/~leichen/" target="_blank">Prof. Lei Chen</a></div>
+            <p class="bio">
+                My research vision is to <strong>"Make Data Usable"</strong> — from ensuring annotation quality to developing effective data organization paradigms, to enhancing data usability in downstream applications such as RAG and AI Agents.
+            </p>
+            <div class="hero-links">
+                <a href="mailto:ysunbp@gmail.com">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Email
+                </a>
+                <a href="https://scholar.google.com/citations?user=j9ypp3QAAAAJ&hl=en" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+                    Google Scholar
+                </a>
+                <a href="https://github.com/ysunbp" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    GitHub
+                </a>
+                <a href="cv.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    CV
+                </a>
+                <a href="cv_chi.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    简历
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-              Qipeng Wang, Rui Sheng, Yafei Li, Huamin Qu, <strong>Yushi Sun</strong>+, Min Zhu+
-              <br>
-              <br>
-              <em>Preprint, Under Review</em>, 2026, + indicates correspondance.
-              <p>We proposed MedKGI, a diagnostic framework grounded in clinical practices. MedKGI integrates a medical knowledge graph (KG) to constrain reasoning to validated medical ontologies, selects questions based on information gain to maximize diagnostic efficiency, and adopts an OSCE-format structured state to maintain consistent evidence tracking across turns.</p>
-              <br>
-              <a href="https://arxiv.org/abs/2512.24181">
-                paper
-              </a>
-              
-              
-              <br>
-              <p>[KG]</p>
-              <br>
-            </td>
-          </tr>
+<!-- Research Interests -->
+<div class="container">
+    <section id="research">
+        <h2><span class="section-icon">🔬</span> Research Interests</h2>
+        <div class="research-tags">
+            <span class="tag">Data Annotation</span>
+            <span class="tag">Data Integration</span>
+            <span class="tag">Data Organization</span>
+            <span class="tag">Retrieval-Augmented Generation (RAG)</span>
+            <span class="tag">Agent Memory</span>
+            <span class="tag">Knowledge Graphs</span>
+            <span class="tag">Text-to-SQL</span>
+            <span class="tag">Reinforcement Learning</span>
+        </div>
+    </section>
+</div>
 
-            <tr bgcolor="#FFFFFF">
-            
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/cacherag.png" alt="CacheRAG" width="160" height="80">
-            </td>
-            <td width="75%" valign="middle">
-                <papertitle>CacheRAG: A Semantic Caching System for Retrieval-Augmented Generation in Knowledge Graph Question Answering</papertitle>
-              
-              <br>
+<!-- Publications -->
+<div class="container">
+    <section id="publications">
+        <h2><span class="section-icon">📄</span> Selected Publications</h2>
 
-              <strong>Yushi Sun</strong>, <a href="https://cse.hkust.edu.hk/~leichen/" class="black-link">Lei Chen</a>
-              <br>
-              <br>
-              <em>Preprint</em>, 2026
-              <p>We proposed a novel KGQA approach that utilizes a caching structure to significantly improve the QA accuracy of KG-based RAG pipeline.</p>
-              <br>
-              <a href="https://github.com/ysunbp/CacheRAG-code">
-                data & code; 
-              </a>
-              
-                
-                paper
-             
-              
-              
-              <br>
-              <p>[LLM, RAG, KG]</p>
-              <br>
-            </td>
-          </tr>
-          
+        <!-- Note: * = Equal contribution, + = Corresponding author -->
+        <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px;">* Equal contribution &nbsp;&nbsp; <sup>+</sup> Corresponding author</p>
 
-          <tr bgcolor="#FFFFFF">
-            
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/kerag.png" alt="KERAG" width="160" height="120">
-            </td>
-            <td width="75%" valign="middle">
-              <a href="https://www.arxiv.org/pdf/2509.04716">
-                <papertitle>KERAG: Knowledge-Enhanced Retrieval-Augmented Generation for Advanced Question Answering</papertitle>
-              </a>
-              
-              <br>
+        <!-- Preprints -->
+        <h3 style="font-size:14px; color:var(--text-tertiary); margin-bottom:16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Preprints</h3>
 
-              <strong>Yushi Sun</strong>, <a href="https://www.kaisun.org/" class="black-link">Kai Sun</a>, <a href="https://scholar.google.com/citations?user=e0KdvxUAAAAJ&hl=en" class="black-link">Ethan Yifan Xu</a>, <a href="https://www.linkedin.com/in/xiao-yang-19808817/" class="black-link">Xiao Yang</a>, <a href="https://lunadong.com/" class="black-link">Xin Luna Dong</a>, <a href="https://nantang.github.io/" class="black-link">Nan Tang</a>, <a href="https://cse.hkust.edu.hk/~leichen/" class="black-link">Lei Chen</a>
-              <br>
-              <br>
-              <em>EMNLP (Findings)</em>, 2025
-              <p>We proposed a novel KGQA approach that resolves the low recall issue of existing methods.</p>
-              <br>
-              <a href="https://github.com/ysunbp/KERAG">
-                data & code; 
-              </a>
-              
-                <a href="https://www.arxiv.org/pdf/2509.04716">
-                paper
-              </a>
-              
-              
-              <br>
-              <p>[LLM, RAG, KG]</p>
-              <br>
-            </td>
-          </tr>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/abs/2603.28583" target="_blank">Navigating the Mirage: A Dual-Path Agentic Framework for Robust Misleading Chart Question Answering</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">Preprint 2026</span>
+                Yanjie Zhang, Yafei Li, Rui Sheng, Zixin Chen, Yanna Lin, Huamin Qu, Lei Chen, <strong>Yushi Sun</strong><sup>+</sup>
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/abs/2603.28583" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-          <tr bgcolor="#FFFFFF">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/crag.png" alt="CRAG" width="180" height="120">
-            </td>
-            <td width="75%" valign="middle">
-              <a href="https://arxiv.org/pdf/2406.04744">
-                <papertitle>CRAG - Comprehensive RAG Benchmark</papertitle>
-              </a>
-              <br>
-              <a href="https://www.linkedin.com/in/xiao-yang-19808817/"  class="black-link">Xiao Yang*</a>, <a href="https://www.kaisun.org/"  class="black-link">Kai Sun*</a>, <a href="http://home.cse.ust.hk/~hxinaa/"  class="black-link">Hao Xin*</a>, <strong>Yushi Sun*</strong>, Nikita Bhalla, Xiangsen Chen, Sajal Choudhary, Rongze Daniel Gui, Ziran Will Jiang, Ziyu Jiang, Lingkun Kong, Brian Moran,
-              Jiaqi Wang, <a href="https://scholar.google.com/citations?user=e0KdvxUAAAAJ&hl=en" class="black-link">Ethan Yifan Xu</a>, An Yan, Chenyu Yang, Eting Yuan, Hanwen Zha,  <a href="https://nantang.github.io/" class="black-link">Nan Tang</a>,  <a href="https://cse.hkust.edu.hk/~leichen/" class="black-link">Lei Chen</a>, Nicolas Scheffer, Yue Liu, Nirav Shah, Rakesh Wanga, Anuj Kumar, <a href="https://scottyih.org/" class="black-link">Wen-tau Yih</a>, <a href="https://lunadong.com/" class="black-link">Xin Luna Dong</a>
-              <br>
-              <br>
-              <em>NeurIPS</em>, 2024, * indicates equal contribution.
-              <p>We constructed a comprehensive RAG benchmark and hosted the KDD Cup competition.</p>
-              <br>
-              <a href="https://arxiv.org/pdf/2406.04744">
-                paper; 
-              </a>
-              <a href="https://www.aicrowd.com/challenges/meta-comprehensive-rag-benchmark-kdd-cup-2024">
-                KDD Cup
-              </a>
-              <br>
-              <p>[LLM, RAG, Data Organization]</p>
-              <br>
-            </td>
-          </tr>
-          
-          <tr bgcolor="#FFFFFF">
-            
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/taxoglimpse.png" alt="TaxoGlimpse" width="180" height="120">
-            </td>
-            <td width="75%" valign="middle">
-              <a href="https://www.vldb.org/pvldb/vol17/p2919-sun.pdf">
-                <papertitle>Are Large Language Models a Good Replacement of Taxonomies?</papertitle>
-              </a>
-              <br>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/abs/2602.16720" target="_blank">APEX-SQL: Talking to the Data via Agentic Exploration for Text-to-SQL</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">Preprint 2026</span>
+                Bowen Cao, Weibin Liao, <strong>Yushi Sun</strong><sup>+</sup>, Dong Fang<sup>+</sup>, Haitao Li, Wai Lam
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/abs/2602.16720" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-              <strong>Yushi Sun</strong>, <a href="http://home.cse.ust.hk/~hxinaa/" class="black-link">Hao Xin</a>, <a href="https://www.kaisun.org/" class="black-link">Kai Sun</a>, <a href="https://scholar.google.com/citations?user=e0KdvxUAAAAJ&hl=en" class="black-link">Ethan Yifan Xu</a>, <a href="https://www.linkedin.com/in/xiao-yang-19808817/" class="black-link">Xiao Yang</a>, <a href="https://lunadong.com/" class="black-link">Xin Luna Dong</a>, <a href="https://nantang.github.io/" class="black-link">Nan Tang</a>, <a href="https://cse.hkust.edu.hk/~leichen/" class="black-link">Lei Chen</a>
-              <br>
-              <br>
-              <em>VLDB</em>, 2024
-              <p>We conducted an extensive evaluation of SOTA LLMs on taxonomies.</p>
-              <br>
-              <a href="https://github.com/ysunbp/TaxoGlimpse">
-                data & code; 
-              </a>
-              <a href="https://www.vldb.org/pvldb/vol17/p2919-sun.pdf">
-                paper; 
-              </a>
-              <a href="taxonomy-vldb.pdf">
-                slides
-              </a>
-              <br>
-              <p>[LLM, Data Organization]</p>
-              <br>
-            </td>
-          </tr>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/abs/2602.08793" target="_blank">LakeHopper: Cross Data Lakes Column Type Annotation through Model Adaptation</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">Preprint 2026</span>
+                <strong>Yushi Sun</strong>, Xijia Li, Nan Tang, Quanqing Xu, Chuanhui Yang, Lei Chen
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/abs/2602.08793" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-          <tr bgcolor="#FFFFFF">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/crowd4u.png" alt="Crowd4U" width="180" height="120">
-            </td>
-            <td width="75%" valign="middle">
-              <a href="https://ieeexplore.ieee.org/document/10598166">
-                <papertitle>Cross-domain-aware Worker Selection with Training for Crowdsourced Annotation</papertitle>
-              </a>
-              <br>
-              <strong>Yushi Sun</strong>, <a href="https://scholar.google.com/citations?user=0jWPyX0AAAAJ&hl=en" class="black-link">Jiachuan Wang</a>, <a href="https://cspcheng.github.io/" class="black-link">Peng Cheng</a>, <a href="https://libinzheng.github.io/" class="black-link">Libin Zheng</a>, <a href="https://cse.hkust.edu.hk/~leichen/" class="black-link">Lei Chen</a>, <a href="https://sai.sysu.edu.cn/teacher/teacher01/1385356.htm" class="black-link">Jian Yin</a>
-              <br>
-              <br>
-              <em>ICDE</em>, 2024
-              <p>We proposed a novel cross-domain-aware worker selection with training approach for crowdsourced data labeling.</p>
-              <br>
-              <a href="https://github.com/ysunbp/crowdsourcing">
-                data & code; 
-              </a>
-              <a href="https://ieeexplore.ieee.org/document/10598166">
-                paper; 
-              </a>
-              <a href="cross-icde.pdf">
-                slides
-              </a>
-              <br>
-              <p>[Data Annotation]</p>
-              <br>
-            </td>
-          </tr>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/abs/2512.24181" target="_blank">MedKGI: Iterative Differential Diagnosis with Medical Knowledge Graphs and Information-Guided Inquiring</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">Preprint 2026</span>
+                Qipeng Wang, Rui Sheng, Yafei Li, Huamin Qu, <strong>Yushi Sun</strong><sup>+</sup>, Min Zhu<sup>+</sup>
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/abs/2512.24181" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/abs/2509.04716" target="_blank">CacheRAG: A Semantic Caching System for Retrieval-Augmented Generation in Knowledge Graph Question Answering</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">Preprint 2026</span>
+                <strong>Yushi Sun</strong>, Lei Chen
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/abs/2509.04716" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+                <a href="https://github.com/ysunbp/CacheRAG-code" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    Data & Code
+                </a>
+            </div>
+        </div>
 
-          <tr bgcolor="#FFFFFF">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <img src="paper-images/RECA.png" alt="RECA" width="180" height="120">
-            </td>
-            <td width="75%" valign="middle">
-              <a href="https://www.vldb.org/pvldb/vol16/p1319-sun.pdf">
-                <papertitle>RECA: Related Tables Enhanced Column Semantic Type Annotation Framework</papertitle>
-              </a>
-              <br>
-              <strong>Yushi Sun</strong>, <a href="http://home.cse.ust.hk/~hxinaa/" class="black-link">Hao Xin</a>, <a href="https://www.cse.ust.hk/~leichen/" class="black-link">Lei Chen</a>
-              <br>
-              <br>
-              <em>VLDB</em>, 2023
-              <p>We defined a novel named entity schema for related and sub-related table discovery and alignment for enhancing the annotation quality of column semantic types.</p>
-              <br>
-              <a href="https://github.com/ysunbp/RECA-paper">
-                data & code; 
-              </a>
-              <a href="https://www.vldb.org/pvldb/vol16/p1319-sun.pdf">
-                paper; 
-              </a>
-              <a href="reca-vldb.pdf">
-                slides
-              </a>
-              <br>
-              <p>[Data Preparation]</p>
-              <br>
-            </td>
-          </tr>
+        <!-- Published -->
+        <h3 style="font-size:14px; color:var(--text-tertiary); margin: 28px 0 16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Published</h3>
 
-          
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/abs/2509.04716" target="_blank">KERAG: Knowledge-Enhanced Retrieval-Augmented Generation for Advanced Question Answering</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">EMNLP 2025</span>
+                <strong>Yushi Sun</strong>, Kai Sun, Ethan Yifan Xu, Xiao Yang, Xin Luna Dong, Nan Tang, Lei Chen
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/abs/2509.04716" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+                <a href="https://github.com/ysunbp/KERAG" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    Data & Code
+                </a>
+            </div>
+        </div>
 
-        </tbody></table>
-        
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-          <tr>
-            <td>
-              <heading>Awards and Honors</heading>
-            </td>
-          </tr>
-        </tbody></table>
-        <table width="100%" align="center" border="0" cellpadding="20"><tbody>
-          <tr>
-            <td style="padding:0px;width:5%;vertical-align:middle">
-            </td>
-            <td width="95%" valign="center">
-              Project Up Scholar at Tencent (2025)
-              <br>
-              HKUST Research Travel Grant (2024, 2025)
-              <br>
-              RedBird Academic Excellence Award for Continuing PhD Students (2023-2024)
-              <br>
-              RedBird Academic Excellence Award for Continuing PhD Students (2022-2023)
-              <br>
-              RedBird PhD Scholarship (2021)
-              <br>
-              HKUST Academic Achievement Medal (2021)
-              <br>
-              First Class Honor graduate from HKUST (2021)
-              <br>
-              Hong Kong PhD Fellowship Scheme (2021-2025)
-              <br>
-            </td>
-          </tr>
-        </tbody></table>
-				
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-          <tr>
-            <td>
-              <heading>Professional Services</heading>
-            </td>
-          </tr>
-        </tbody></table>
-        <table width="100%" align="center" border="0" cellpadding="20"><tbody>
-          <tr>
-            <td style="padding:0px;width:5%;vertical-align:middle">
-            </td>
-            <td width="95%" valign="center">
-              Conference reviewer: CIKM 2023
-              <br>
-              Journal reviewer: TKDE 2024
-            </td>
-            
-          </tr>
-        </tbody></table>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://arxiv.org/pdf/2406.04744" target="_blank">CRAG — Comprehensive RAG Benchmark</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">NeurIPS 2024</span>
+                Xiao Yang*, Kai Sun*, Hao Xin*, <strong>Yushi Sun</strong>*, Nikita Bhalla, Xiangsen Chen, Sajal Choudhary, Rongze Daniel Gui, Ziran Will Jiang, Ziyu Jiang, Lingkun Kong, Brian Moran, Jiaqi Wang, Ethan Yifan Xu, An Yan, Chenyu Yang, Eting Yuan, Hanwen Zha, Nan Tang, Lei Chen, Nicolas Scheffer, Yue Liu, Nirav Shah, Rakesh Wanga, Anuj Kumar, Wen-tau Yih, Xin Luna Dong
+            </div>
+            <div class="pub-links">
+                <a href="https://arxiv.org/pdf/2406.04744" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+                <a href="https://www.aicrowd.com/challenges/meta-comprehensive-rag-benchmark-kdd-cup-2024" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    KDD Cup
+                </a>
+            </div>
+        </div>
 
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://www.vldb.org/pvldb/vol17/p2919-sun.pdf" target="_blank">Are Large Language Models a Good Replacement of Taxonomies?</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">VLDB 2024</span>
+                <strong>Yushi Sun</strong>, Hao Xin, Kai Sun, Ethan Yifan Xu, Xiao Yang, Xin Luna Dong, Nan Tang, Lei Chen
+            </div>
+            <div class="pub-links">
+                <a href="https://www.vldb.org/pvldb/vol17/p2919-sun.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+                <a href="https://github.com/ysunbp/TaxoGlimpse" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    Data & Code
+                </a>
+                <a href="taxonomy-vldb.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    Slides
+                </a>
+            </div>
+        </div>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-          <tr>
-            <td>
-              <heading>Teaching Experience</heading>
-            </td>
-          </tr>
-        </tbody></table>
-        <table width="100%" align="center" border="0" cellpadding="20"><tbody>
-          <tr>
-            <td style="padding:0px;width:5%;vertical-align:middle">
-            </td>
-            <td width="95%" valign="center">
-              Teaching Assistant of COMP 1021 Introduction to Computer Science (2024 Fall)
-              <br>
-              Teaching Assistant of COMP 2711H Honors Discrete Mathematical Tools for Computer Science (2022 Fall)
-              <br>
-              Teaching Assistant of COMP 5712 Introduction to Combinatorial Optimization (2022 Spring)
-            </td>
-          </tr>
-        </tbody></table>
-        
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10598166" target="_blank">Cross-domain-aware Worker Selection with Training for Crowdsourced Annotation</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">ICDE 2024</span>
+                <strong>Yushi Sun</strong>, Jiachuan Wang, Peng Cheng, Libin Zheng, Lei Chen, Jian Yin
+            </div>
+            <div class="pub-links">
+                <a href="https://ieeexplore.ieee.org/document/10598166" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+                <a href="https://github.com/ysunbp/crowdsourcing" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    Data & Code
+                </a>
+                <a href="cross-icde.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    Slides
+                </a>
+            </div>
+        </div>
 
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://www.vldb.org/pvldb/vol16/p1319-sun.pdf" target="_blank">RECA: Related Tables Enhanced Column Semantic Type Annotation Framework</a></div>
+            <div class="pub-meta">
+                <span class="pub-venue">VLDB 2023</span>
+                <strong>Yushi Sun</strong>, Hao Xin, Lei Chen
+            </div>
+            <div class="pub-links">
+                <a href="https://www.vldb.org/pvldb/vol16/p1319-sun.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Paper
+                </a>
+                <a href="https://github.com/ysunbp/RECA-paper" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    Data & Code
+                </a>
+                <a href="reca-vldb.pdf" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    Slides
+                </a>
+            </div>
+        </div>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-          <tr>
-            <td>
-              <heading>Vistors</heading>
-              
-            </td>
-          </tr>
-        </tbody></table>
+    </section>
+</div>
+
+<!-- Awards -->
+<div class="container">
+    <section id="awards">
+        <h2><span class="section-icon">🏆</span> Awards & Honors</h2>
+        <ul class="awards-list">
+            <li>
+                <span class="award-year">2025</span>
+                <span><span class="award-name">Tencent Project Up Scholar</span> — 腾讯青云计划学者</span>
+            </li>
+            <li>
+                <span class="award-year">2021</span>
+                <span><span class="award-name">Hong Kong PhD Fellowship Scheme (HKPFS)</span></span>
+            </li>
+            <li>
+                <span class="award-year">2023</span>
+                <span><span class="award-name">Red Bird Academic Excellence Award</span> — 红鸟学术卓越奖</span>
+            </li>
+            <li>
+                <span class="award-year">2022</span>
+                <span><span class="award-name">Red Bird Academic Excellence Award</span></span>
+            </li>
+            <li>
+                <span class="award-year">2021</span>
+                <span><span class="award-name">HKUST Academic Achievement Medal</span></span>
+            </li>
+            <li>
+                <span class="award-year">2021</span>
+                <span><span class="award-name">Red Bird Academic Excellence Award</span></span>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<!-- Contact -->
+<div class="container">
+    <section id="contact">
+        <h2><span class="section-icon">✉️</span> Contact</h2>
+        <div class="contact-grid">
+            <a href="mailto:ysunbp@gmail.com" class="contact-item" style="text-decoration:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">ysunbp@gmail.com</div>
+                </div>
+            </a>
+            <a href="https://github.com/ysunbp" target="_blank" class="contact-item" style="text-decoration:none;">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                <div>
+                    <div class="contact-label">GitHub</div>
+                    <div class="contact-value">github.com/ysunbp</div>
+                </div>
+            </a>
+            <a href="https://scholar.google.com/citations?user=j9ypp3QAAAAJ&hl=en" target="_blank" class="contact-item" style="text-decoration:none;">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+                <div>
+                    <div class="contact-label">Google Scholar</div>
+                    <div class="contact-value">Scholar Profile</div>
+                </div>
+            </a>
+            <div class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div>
+                    <div class="contact-label">Location</div>
+                    <div class="contact-value">Shenzhen, China</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Visitor Counter -->
+<div class="container">
+    <div class="visitor-counter">
         <table width="100%" align="center" border="0" cellpadding="20"><tbody>
           <tr>
             <td style="padding:0px;width:5%;vertical-align:middle">
@@ -425,9 +755,16 @@
               <a href="https://clustrmaps.com/site/1bhgp"  title="ClustrMaps"><img src="//www.clustrmaps.com/map_v2.png?d=o49PzlwfsJTtaYdKY6VK5Qj3BgZ6cb1mfyV7L_EzHE8&cl=ffffff" /></a>
           </tr>
         </tbody></table>
-      </td>
-    </tr>
-  </table>
-</body>
+        <div>Last updated Mar 2026</div>
+    </div>
+</div>
 
+<!-- Footer -->
+<footer>
+    <div class="container">
+        © 2025 Yushi Sun. Built with ❤️ and plain HTML.
+    </div>
+</footer>
+
+</body>
 </html>

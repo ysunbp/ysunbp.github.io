@@ -21,34 +21,39 @@
         }
 
         :root {
-            --bg: #fafafa;
+            --bg: #fffefd;
             --bg-card: #ffffff;
-            --text-primary: #1a1a2e;
-            --text-secondary: #4a4a6a;
-            --text-tertiary: #8888a8;
-            --accent: #2d5be3;
-            --accent-light: #eef3ff;
-            --border: #e8e8ef;
-            --tag-bg: #f0f1f5;
-            --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
-            --radius: 12px;
-            --max-width: 780px;
+            --text-primary: #1d2430;
+            --text-secondary: #4b5565;
+            --text-tertiary: #778090;
+            --accent: #0f5e73;
+            --accent-ink: #123c4a;
+            --accent-warm: #8a5a12;
+            --accent-light: #edf5f4;
+            --border: #eeeae5;
+            --tag-bg: #fffdfa;
+            --shadow: 0 10px 30px rgba(24, 34, 48, 0.06);
+            --radius: 8px;
+            --max-width: 980px;
             --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            --font-heading: Georgia, 'Times New Roman', serif;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #0f0f1a;
-                --bg-card: #1a1a2e;
-                --text-primary: #e8e8f0;
-                --text-secondary: #a8a8c0;
-                --text-tertiary: #6a6a88;
-                --accent: #5b8aff;
-                --accent-light: #1a2040;
-                --border: #2a2a40;
-                --tag-bg: #1e1e35;
-                --shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+                --bg: #11161a;
+                --bg-card: #171a20;
+                --text-primary: #edf0f4;
+                --text-secondary: #b9c0ca;
+                --text-tertiary: #858d99;
+                --accent: #74c7d6;
+                --accent-ink: #a2dce5;
+                --accent-warm: #ddb36d;
+                --accent-light: #18323a;
+                --border: #2b313a;
+                --tag-bg: #1d222b;
+                --shadow: 0 10px 30px rgba(0,0,0,0.24);
             }
         }
 
@@ -60,10 +65,11 @@
             font-family: var(--font-body);
             background: var(--bg);
             color: var(--text-primary);
-            line-height: 1.7;
+            line-height: 1.68;
             font-size: 15.5px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0) 340px);
         }
 
         a {
@@ -85,23 +91,22 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: var(--bg);
+            background: rgba(255, 254, 253, 0.84);
             border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: background 0.3s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 52px;
+            height: 56px;
         }
         nav .nav-name {
             font-weight: 600;
             font-size: 15px;
-            letter-spacing: -0.02em;
             color: var(--text-primary);
+            letter-spacing: 0;
         }
         nav .nav-links {
             display: flex;
@@ -110,8 +115,8 @@
         nav .nav-links a {
             font-size: 13px;
             color: var(--text-secondary);
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
             transition: all 0.2s;
         }
         nav .nav-links a:hover {
@@ -122,31 +127,42 @@
 
         /* ========== Hero Section ========== */
         .hero {
-            padding: 64px 0 48px;
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
+            padding: 50px 0 44px;
+            display: grid;
+            grid-template-columns: 190px minmax(0, 1fr);
+            gap: 38px;
+            align-items: start;
+            border-bottom: 1px solid var(--border);
         }
         .hero-avatar {
             flex-shrink: 0;
         }
         .hero-avatar img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
+            width: 166px;
+            height: 186px;
+            border-radius: 6px;
             object-fit: cover;
-            border: 3px solid var(--border);
-            transition: border-color 0.3s;
+            object-position: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            background: var(--bg-card);
         }
-        .hero-avatar img:hover {
-            border-color: var(--accent);
+        .profile-note {
+            width: 166px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid var(--accent);
+            color: var(--text-tertiary);
+            font-size: 12.5px;
+            line-height: 1.45;
         }
         .hero-info h1 {
-            font-size: 32px;
+            font-family: var(--font-heading);
+            font-size: 42px;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
-            margin-bottom: 2px;
+            letter-spacing: 0;
+            line-height: 1.1;
+            margin-bottom: 4px;
         }
         .hero-info .name-cn {
             font-size: 16px;
@@ -155,19 +171,23 @@
             margin-bottom: 16px;
         }
         .hero-info .position {
-            font-size: 15px;
+            font-size: 15.5px;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .hero-info .position strong {
             color: var(--text-primary);
             font-weight: 600;
         }
+        .hero-info .position a {
+            font-weight: 500;
+        }
         .hero-info .bio {
-            font-size: 14.5px;
+            font-size: 15.2px;
             color: var(--text-secondary);
-            margin-bottom: 16px;
-            max-width: 520px;
+            margin: 18px 0 18px;
+            max-width: 640px;
+            line-height: 1.72;
         }
         .hero-links {
             display: flex;
@@ -179,8 +199,8 @@
             align-items: center;
             gap: 5px;
             font-size: 13px;
-            padding: 5px 12px;
-            border-radius: 8px;
+            padding: 5px 9px;
+            border-radius: 4px;
             border: 1px solid var(--border);
             color: var(--text-secondary);
             transition: all 0.2s;
@@ -195,28 +215,60 @@
             width: 14px;
             height: 14px;
         }
-
         /* ========== Section Common ========== */
         section {
-            padding: 36px 0;
+            padding: 28px 0;
         }
         section h2 {
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
         }
         section h2 .section-icon {
-            font-size: 16px;
-            opacity: 0.6;
+            display: none;
         }
 
         /* ========== Research Interest ========== */
+        .research-intro {
+            max-width: 720px;
+            color: var(--text-secondary);
+            font-size: 14.5px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .theme-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            box-shadow: 0 1px 0 rgba(24, 34, 48, 0.03);
+        }
+        .theme-card h3 {
+            font-size: 14.5px;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .theme-card p {
+            font-size: 13.2px;
+            color: var(--text-secondary);
+            line-height: 1.58;
+        }
         .research-tags {
             display: flex;
             flex-wrap: wrap;
@@ -224,13 +276,12 @@
         }
         .research-tags .tag {
             display: inline-block;
-            padding: 6px 14px;
+            padding: 4px 10px;
             background: var(--tag-bg);
-            border-radius: 20px;
-            font-size: 13.5px;
+            border-radius: 5px;
+            font-size: 13px;
             color: var(--text-secondary);
             border: 1px solid var(--border);
-            transition: all 0.2s;
         }
         .research-tags .tag:hover {
             border-color: var(--accent);
@@ -239,18 +290,22 @@
 
         /* ========== Publications ========== */
         .pub-item {
-            padding: 20px 0;
+            position: relative;
+            padding: 18px 0 18px 126px;
             border-bottom: 1px solid var(--border);
         }
         .pub-item:first-child { padding-top: 0; }
         .pub-item:last-child { border-bottom: none; }
+        .pub-item:hover {
+            background: transparent;
+        }
 
         .pub-title {
-            font-size: 15.5px;
+            font-size: 15.8px;
             font-weight: 600;
-            line-height: 1.5;
-            margin-bottom: 6px;
-            letter-spacing: -0.01em;
+            line-height: 1.45;
+            margin-bottom: 5px;
+            letter-spacing: 0;
         }
         .pub-title a {
             color: var(--text-primary);
@@ -261,34 +316,43 @@
         .pub-meta {
             font-size: 13.5px;
             color: var(--text-tertiary);
-            margin-bottom: 8px;
+            margin-bottom: 7px;
+            line-height: 1.55;
         }
         .pub-meta strong {
             color: var(--accent);
             font-weight: 600;
         }
         .pub-venue {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 2px 8px;
+            position: absolute;
+            left: 0;
+            top: 20px;
+            width: 96px;
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 7px;
             border-radius: 4px;
             background: var(--accent-light);
-            color: var(--accent);
-            margin-right: 6px;
-            letter-spacing: 0.02em;
+            color: var(--accent-ink);
+            margin-right: 0;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.25;
         }
         .pub-links {
             display: flex;
             gap: 10px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
         .pub-links a {
-            font-size: 12.5px;
-            color: var(--text-tertiary);
+            font-size: 12px;
+            color: var(--accent);
             display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
+            padding: 0;
         }
         .pub-links a:hover { color: var(--accent); opacity: 1; }
         .pub-links svg { width: 13px; height: 13px; }
@@ -298,13 +362,13 @@
             list-style: none;
         }
         .awards-list li {
-            padding: 10px 0;
+            padding: 11px 0;
             border-bottom: 1px solid var(--border);
             font-size: 14.5px;
             color: var(--text-secondary);
             display: flex;
             align-items: baseline;
-            gap: 10px;
+            gap: 14px;
         }
         .awards-list li:last-child { border-bottom: none; }
         .awards-list .award-year {
@@ -329,13 +393,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 16px;
+            padding: 15px 16px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
+            border-radius: 6px;
             transition: border-color 0.2s;
         }
-        .contact-item:hover { border-color: var(--accent); }
+        .contact-item:hover {
+            border-color: var(--accent);
+        }
         .contact-item svg {
             width: 18px;
             height: 18px;
@@ -359,11 +425,11 @@
         /* ========== Visitor Counter ========== */
         .visitor-counter {
             text-align: center;
-            padding: 28px 0 40px;
+            padding: 22px 0 34px;
             font-size: 13px;
             color: var(--text-tertiary);
             border-top: 1px solid var(--border);
-            margin-top: 20px;
+            margin-top: 14px;
         }
         .visitor-counter .count {
             font-family: var(--font-mono);
@@ -381,33 +447,66 @@
         }
 
         /* ========== Responsive ========== */
-        @media (max-width: 640px) {
+        @media (max-width: 900px) {
             .hero {
-                flex-direction: column;
+                grid-template-columns: 170px minmax(0, 1fr);
+                gap: 28px;
+            }
+            .theme-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            nav .container {
+                height: auto;
+                min-height: 52px;
+                gap: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                align-items: flex-start;
+            }
+            nav .nav-links {
+                justify-content: flex-end;
+                flex-wrap: wrap;
+            }
+            .hero {
+                grid-template-columns: 1fr;
                 align-items: center;
                 text-align: center;
-                padding: 48px 0 36px;
+                gap: 20px;
+                padding: 32px 0 26px;
+            }
+            .hero-avatar img {
+                width: 140px;
+                height: 156px;
+            }
+            .profile-note {
+                display: none;
             }
             .hero-info .bio { margin-left: auto; margin-right: auto; }
             .hero-links { justify-content: center; }
-            .hero-info h1 { font-size: 26px; }
+            .hero-info h1 { font-size: 34px; }
+            .pub-item {
+                padding: 16px 0;
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+            }
+            .pub-venue {
+                position: static;
+                display: inline-block;
+                width: auto;
+                margin: 0 0 7px;
+                text-align: left;
+            }
+            .pub-item:hover {
+                transform: none;
+                box-shadow: none;
+            }
             .contact-grid { grid-template-columns: 1fr; }
             section h2 { font-size: 17px; }
         }
 
         /* ========== Animations ========== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hero, section, .visitor-counter {
-            animation: fadeInUp 0.6s ease-out both;
-        }
-        section:nth-child(2) { animation-delay: 0.05s; }
-        section:nth-child(3) { animation-delay: 0.1s; }
-        section:nth-child(4) { animation-delay: 0.15s; }
-        section:nth-child(5) { animation-delay: 0.2s; }
-        .visitor-counter { animation-delay: 0.25s; }
     </style>
 </head>
 <body>
@@ -429,12 +528,13 @@
     <div class="hero">
         <div class="hero-avatar">
             <img src="photos/photo.jpg" alt="Yushi Sun" onerror="this.src='https://ui-avatars.com/api/?name=Yushi+Sun&background=2d5be3&color=fff&size=280&font-size=0.35'">
+            <div class="profile-note">Research at the intersection of data management, knowledge-intensive AI, and reliable agent behavior.</div>
         </div>
         <div class="hero-info">
             <h1>Yushi Sun</h1>
             <div class="name-cn">孙宇石</div>
             <div class="position"><strong>Senior Researcher</strong> at Tencent Games · LightSpeed Studios</div>
-            <div class="position" style="margin-top: -4px;">Ph.D. from HKUST (2025), advised by <a href="https://www.cse.ust.hk/~leichen/" target="_blank">Prof. Lei Chen</a></div>
+            <div class="position">Ph.D. from HKUST (2025), advised by <a href="https://www.cse.ust.hk/~leichen/" target="_blank">Prof. Lei Chen</a></div>
             <p class="bio">
                 My research vision is to <strong>make AI systems reason reliably over data</strong>. Rooted in data management, I develop retrieval-augmented generation and agent memory that turn raw data and knowledge into trustworthy LLM and agent behavior — from question answering to scientific discovery.
             </p>
@@ -461,7 +561,7 @@
                 </a>
                 <a href="cv_chi.pdf" target="_blank">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    简历
+                    Chinese CV
                 </a>
             </div>
         </div>
@@ -471,7 +571,24 @@
 <!-- Research Interests -->
 <div class="container">
     <section id="research">
-        <h2><span class="section-icon">🔬</span> Research Interests</h2>
+        <h2><span class="section-icon">Research</span> Research Interests</h2>
+        <p class="research-intro">
+            I build data-centric methods and benchmarks for language models that must retrieve, remember, and reason over structured and unstructured knowledge.
+        </p>
+        <div class="theme-grid">
+            <article class="theme-card">
+                <h3>Reliable Retrieval-Augmented Generation</h3>
+                <p>Systems and benchmarks for grounding LLM behavior in external data, knowledge graphs, and verifiable retrieval pipelines.</p>
+            </article>
+            <article class="theme-card">
+                <h3>Agent Memory and Long-Horizon Reasoning</h3>
+                <p>Memory structures, freshness checks, and anchoring mechanisms for agents operating across extended conversations and tasks.</p>
+            </article>
+            <article class="theme-card">
+                <h3>Data Management for AI Systems</h3>
+                <p>Methods for semantic typing, text-to-SQL, taxonomy reasoning, and scientific data interfaces that connect models with real data.</p>
+            </article>
+        </div>
         <div class="research-tags">
             <span class="tag">Retrieval-Augmented Generation (RAG)</span>
             <span class="tag">Agent Memory</span>
@@ -486,7 +603,7 @@
 <!-- Publications -->
 <div class="container">
     <section id="publications">
-        <h2><span class="section-icon">📄</span> Selected Publications</h2>
+        <h2><span class="section-icon">Papers</span> Selected Publications</h2>
 
         <!-- Note: * = Equal contribution, + = Corresponding author -->
         <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px;">* Equal contribution &nbsp;&nbsp; <sup>+</sup> Corresponding author</p>
@@ -753,7 +870,7 @@
 <!-- Awards -->
 <div class="container">
     <section id="awards">
-        <h2><span class="section-icon">🏆</span> Awards & Honors</h2>
+        <h2><span class="section-icon">Awards</span> Awards & Honors</h2>
         <ul class="awards-list">
             <li>
                 <span class="award-year">2025</span>
@@ -786,7 +903,7 @@
 <!-- Contact -->
 <div class="container">
     <section id="contact">
-        <h2><span class="section-icon">✉️</span> Contact</h2>
+        <h2><span class="section-icon">Contact</span> Contact</h2>
         <div class="contact-grid">
             <a href="mailto:ysunbp@gmail.com" class="contact-item" style="text-decoration:none;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -823,7 +940,7 @@
 <!-- Last Updated -->
 <div class="container">
     <div class="visitor-counter">
-        <div>Last updated Jun 7, 2026</div>
+        <div>Last updated Jul 19, 2026</div>
     </div>
 </div>
 

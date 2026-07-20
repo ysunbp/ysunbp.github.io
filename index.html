@@ -507,6 +507,64 @@
         }
 
         /* ========== Animations ========== */
+
+        /* ========== Topic → Publication Interaction ========== */
+        .research-hint {
+            font-size: 12.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        .research-tags .tag {
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+        }
+        .research-tags .tag[data-topic]:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .research-tags .tag.is-active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(15, 94, 115, 0.28);
+            transform: translateY(-1px);
+        }
+        @media (prefers-color-scheme: dark) {
+            .research-tags .tag.is-active { color: #0d1418; }
+        }
+
+        /* Publication states when a topic is active */
+        .tracing .pub-item {
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+        .tracing .pub-item.is-dimmed {
+            opacity: 0.3;
+            filter: grayscale(0.45);
+        }
+        .tracing .pub-item.is-highlight {
+            opacity: 1;
+        }
+        .pub-item.is-highlight::before {
+            content: "";
+            position: absolute;
+            left: -16px;
+            top: 12px;
+            bottom: 12px;
+            width: 3px;
+            border-radius: 3px;
+            background: var(--accent);
+            transform-origin: top center;
+            animation: pop-bar 0.4s ease;
+        }
+        @media (max-width: 860px) {
+            .pub-item.is-highlight::before { left: -6px; }
+        }
+        @keyframes pop-bar {
+            from { transform: scaleY(0); opacity: 0; }
+            to { transform: scaleY(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -589,13 +647,15 @@
                 <p>Methods for semantic typing, text-to-SQL, taxonomy reasoning, and scientific data interfaces that connect models with real data.</p>
             </article>
         </div>
+        <p class="research-hint" id="research-hint">Tip: click a topic below to highlight the related papers.</p>
         <div class="research-tags">
-            <span class="tag">Retrieval-Augmented Generation (RAG)</span>
-            <span class="tag">Agent Memory</span>
-            <span class="tag">Knowledge Graphs</span>
-            <span class="tag">Text-to-SQL</span>
-            <span class="tag">AI4S</span>
-            <span class="tag">Data Management</span>
+            <span class="tag" data-topic="rag">Retrieval-Augmented Generation (RAG)</span>
+            <span class="tag" data-topic="memory">Agent Memory</span>
+            <span class="tag" data-topic="kg">Knowledge Graphs</span>
+            <span class="tag" data-topic="sql">Text-to-SQL</span>
+            <span class="tag" data-topic="mllm">Multimodal LLMs</span>
+            <span class="tag" data-topic="ai4s">AI4S</span>
+            <span class="tag" data-topic="data">Data Management</span>
         </div>
     </section>
 </div>
@@ -611,7 +671,7 @@
         <!-- Preprints -->
         <h3 style="font-size:14px; color:var(--text-tertiary); margin-bottom:16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Preprints</h3>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="ai4s">
             <div class="pub-title"><a href="https://arxiv.org/abs/2607.11079" target="_blank">Are LLMs Ready for Scientific Discovery? A Capability-Oriented Benchmark for AI Scientists</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -625,7 +685,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="rag memory">
             <div class="pub-title"><a href="https://arxiv.org/abs/2607.00394" target="_blank">When Classic Cache Policies Fail: Learning-Augmented Replacement for Semantic Retrieval Buffers</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -639,7 +699,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="memory">
             <div class="pub-title"><a href="https://arxiv.org/abs/2605.06527" target="_blank">STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -653,7 +713,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="memory">
             <div class="pub-title"><a href="https://arxiv.org/abs/2605.01688" target="_blank">GRAVITY: Architecture-Agnostic Structured Anchoring for Long-Horizon Conversational Memory</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -667,7 +727,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="data">
             <div class="pub-title"><a href="https://arxiv.org/abs/2602.08793" target="_blank">LakeHopper: Cross Data Lakes Column Type Annotation through Model Adaptation</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -681,7 +741,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="kg ai4s">
             <div class="pub-title"><a href="https://arxiv.org/abs/2512.24181" target="_blank">MedKGI: Iterative Differential Diagnosis with Medical Knowledge Graphs and Information-Guided Inquiring</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -695,7 +755,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="rag kg">
             <div class="pub-title"><a href="https://arxiv.org/abs/2604.26176" target="_blank">CacheRAG: A Semantic Caching System for Retrieval-Augmented Generation in Knowledge Graph Question Answering</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -716,7 +776,7 @@
         <!-- Published -->
         <h3 style="font-size:14px; color:var(--text-tertiary); margin: 28px 0 16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Published</h3>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="kg">
             <div class="pub-title"><a href="https://arxiv.org/abs/2604.23356" target="_blank">VeriLLMed: Interactive Visual Debugging of Medical Large Language Models with Knowledge Graphs</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">VIS 2026</span>
@@ -730,7 +790,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="mllm">
             <div class="pub-title"><a href="https://arxiv.org/pdf/2603.28583v2" target="_blank">Navigating the Mirage: A Dual-Path Agentic Framework for Robust Misleading Chart Question Answering</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">MM 2026</span>
@@ -744,7 +804,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="sql data">
             <div class="pub-title"><a href="https://arxiv.org/abs/2602.16720" target="_blank">APEX-SQL: Talking to the Data via Agentic Exploration for Text-to-SQL</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">KDD 2026</span>
@@ -762,7 +822,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="rag kg">
             <div class="pub-title"><a href="https://arxiv.org/abs/2509.04716" target="_blank">KERAG: Knowledge-Enhanced Retrieval-Augmented Generation for Advanced Question Answering</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">EMNLP 2025</span>
@@ -780,7 +840,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="rag kg">
             <div class="pub-title"><a href="https://arxiv.org/pdf/2406.04744" target="_blank">CRAG — Comprehensive RAG Benchmark</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">NeurIPS 2024</span>
@@ -798,7 +858,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="kg">
             <div class="pub-title"><a href="https://www.vldb.org/pvldb/vol17/p2919-sun.pdf" target="_blank">Are Large Language Models a Good Replacement of Taxonomies?</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">VLDB 2024</span>
@@ -820,7 +880,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="data">
             <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10598166" target="_blank">Cross-domain-aware Worker Selection with Training for Crowdsourced Annotation</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">ICDE 2024</span>
@@ -842,7 +902,7 @@
             </div>
         </div>
 
-        <div class="pub-item">
+        <div class="pub-item" data-topics="data">
             <div class="pub-title"><a href="https://www.vldb.org/pvldb/vol16/p1319-sun.pdf" target="_blank">RECA: Related Tables Enhanced Column Semantic Type Annotation Framework</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">VLDB 2023</span>
@@ -950,6 +1010,82 @@
         © 2025 Yushi Sun. Built with ❤️ and plain HTML.
     </div>
 </footer>
+
+<script>
+(function () {
+    var tags = Array.prototype.slice.call(document.querySelectorAll(".research-tags .tag[data-topic]"));
+    var items = Array.prototype.slice.call(document.querySelectorAll(".pub-item[data-topics]"));
+    var hint = document.getElementById("research-hint");
+    var defaultHint = hint ? hint.textContent : "";
+    var activeTopic = null;
+
+    if (!tags.length || !items.length) return;
+
+    function resetState() {
+        activeTopic = null;
+        document.body.classList.remove("tracing");
+        tags.forEach(function (t) { t.classList.remove("is-active"); });
+        items.forEach(function (it) { it.classList.remove("is-dimmed", "is-highlight"); });
+        if (hint) hint.textContent = defaultHint;
+    }
+
+    function itemMatches(item, topic) {
+        var topics = (item.getAttribute("data-topics") || "").split(/\s+/);
+        return topics.indexOf(topic) !== -1;
+    }
+
+    function activate(topic, tag) {
+        activeTopic = topic;
+        document.body.classList.add("tracing");
+        tags.forEach(function (t) { t.classList.toggle("is-active", t === tag); });
+
+        var count = 0;
+        items.forEach(function (item) {
+            if (itemMatches(item, topic)) {
+                item.classList.add("is-highlight");
+                item.classList.remove("is-dimmed");
+                count++;
+            } else {
+                item.classList.add("is-dimmed");
+                item.classList.remove("is-highlight");
+            }
+        });
+
+        if (hint) {
+            var label = tag.textContent.trim();
+            hint.textContent = count +
+                (count === 1 ? " paper" : " papers") +
+                " on " + label + " · click again to reset.";
+        }
+    }
+
+    tags.forEach(function (tag) {
+        tag.setAttribute("role", "button");
+        tag.setAttribute("tabindex", "0");
+        tag.addEventListener("click", function () {
+            var topic = tag.getAttribute("data-topic");
+            if (activeTopic === topic) { resetState(); }
+            else { activate(topic, tag); }
+        });
+        tag.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                tag.click();
+            }
+        });
+    });
+
+    // Click outside the tags/publications clears the state.
+    document.addEventListener("click", function (e) {
+        if (activeTopic === null) return;
+        if (e.target.closest(".research-tags") || e.target.closest("#publications")) return;
+        resetState();
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") resetState();
+    });
+})();
+</script>
 
 </body>
 </html>

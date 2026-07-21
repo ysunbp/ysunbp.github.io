@@ -535,16 +535,13 @@
             .research-tags .tag.is-active { color: #0d1418; }
         }
 
-        /* Publication states when a topic is active */
-        .tracing .pub-item {
-            transition: opacity 0.3s ease, filter 0.3s ease;
+        /* Publication states when one or more topics are active */
+        .pub-item {
+            transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
-        .tracing .pub-item.is-dimmed {
-            opacity: 0.3;
-            filter: grayscale(0.45);
-        }
-        .tracing .pub-item.is-highlight {
-            opacity: 1;
+        /* Filtered-out papers collapse away instead of holding space. */
+        .pub-item.is-hidden {
+            display: none;
         }
         .pub-item.is-highlight::before {
             content: "";
@@ -565,6 +562,16 @@
             from { transform: scaleY(0); opacity: 0; }
             to { transform: scaleY(1); opacity: 1; }
         }
+        /* Newly entering papers fade + rise into place. */
+        @keyframes pub-float-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .pub-item.is-floating {
+            animation: pub-float-in 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        }
+        /* A group heading with no visible papers is hidden. */
+        .pub-group-title.is-hidden { display: none; }
     </style>
 </head>
 <body>
@@ -647,7 +654,7 @@
                 <p>Methods for semantic typing, text-to-SQL, taxonomy reasoning, and scientific data interfaces that connect models with real data.</p>
             </article>
         </div>
-        <p class="research-hint" id="research-hint">Tip: click a topic below to highlight the related papers.</p>
+        <p class="research-hint" id="research-hint">Tip: click a topic to filter papers · Shift-click to add more topics.</p>
         <div class="research-tags">
             <span class="tag" data-topic="rag">Retrieval-Augmented Generation (RAG)</span>
             <span class="tag" data-topic="memory">Agent Memory</span>
@@ -669,7 +676,7 @@
         <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px;">* Equal contribution &nbsp;&nbsp; <sup>+</sup> Corresponding author</p>
 
         <!-- Preprints -->
-        <h3 style="font-size:14px; color:var(--text-tertiary); margin-bottom:16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Preprints</h3>
+        <h3 class="pub-group-title" style="font-size:14px; color:var(--text-tertiary); margin-bottom:16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Preprints</h3>
 
         <div class="pub-item" data-topics="ai4s">
             <div class="pub-title"><a href="https://arxiv.org/abs/2607.11079" target="_blank">Are LLMs Ready for Scientific Discovery? A Capability-Oriented Benchmark for AI Scientists</a></div>
@@ -774,7 +781,7 @@
         </div>
 
         <!-- Published -->
-        <h3 style="font-size:14px; color:var(--text-tertiary); margin: 28px 0 16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Published</h3>
+        <h3 class="pub-group-title" style="font-size:14px; color:var(--text-tertiary); margin: 28px 0 16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Published</h3>
 
         <div class="pub-item" data-topics="kg">
             <div class="pub-title"><a href="https://arxiv.org/abs/2604.23356" target="_blank">VeriLLMed: Interactive Visual Debugging of Medical Large Language Models with Knowledge Graphs</a></div>
@@ -1015,74 +1022,119 @@
 (function () {
     var tags = Array.prototype.slice.call(document.querySelectorAll(".research-tags .tag[data-topic]"));
     var items = Array.prototype.slice.call(document.querySelectorAll(".pub-item[data-topics]"));
+    var groupTitles = Array.prototype.slice.call(document.querySelectorAll(".pub-group-title"));
     var hint = document.getElementById("research-hint");
     var defaultHint = hint ? hint.textContent : "";
-    var activeTopic = null;
+    var active = [];   // list of active topic strings (multi-select)
 
     if (!tags.length || !items.length) return;
 
-    function resetState() {
-        activeTopic = null;
-        document.body.classList.remove("tracing");
-        tags.forEach(function (t) { t.classList.remove("is-active"); });
-        items.forEach(function (it) { it.classList.remove("is-dimmed", "is-highlight"); });
-        if (hint) hint.textContent = defaultHint;
+    function itemTopics(item) {
+        return (item.getAttribute("data-topics") || "").split(/\s+/);
+    }
+    // A paper shows if it matches ANY active topic (OR / union).
+    function itemMatches(item) {
+        if (!active.length) return true;
+        var topics = itemTopics(item);
+        for (var i = 0; i < active.length; i++) {
+            if (topics.indexOf(active[i]) !== -1) return true;
+        }
+        return false;
     }
 
-    function itemMatches(item, topic) {
-        var topics = (item.getAttribute("data-topics") || "").split(/\s+/);
-        return topics.indexOf(topic) !== -1;
+    // Hide a group heading when none of the papers following it are visible.
+    function updateGroupTitles() {
+        groupTitles.forEach(function (title) {
+            var node = title.nextElementSibling;
+            var anyVisible = false;
+            while (node && !node.classList.contains("pub-group-title")) {
+                if (node.classList.contains("pub-item") && !node.classList.contains("is-hidden")) {
+                    anyVisible = true;
+                    break;
+                }
+                node = node.nextElementSibling;
+            }
+            title.classList.toggle("is-hidden", !anyVisible);
+        });
     }
 
-    function activate(topic, tag) {
-        activeTopic = topic;
-        document.body.classList.add("tracing");
-        tags.forEach(function (t) { t.classList.toggle("is-active", t === tag); });
+    function render() {
+        // FLIP: record positions before layout change.
+        var first = items.map(function (it) { return it.getBoundingClientRect().top; });
 
         var count = 0;
         items.forEach(function (item) {
-            if (itemMatches(item, topic)) {
-                item.classList.add("is-highlight");
-                item.classList.remove("is-dimmed");
-                count++;
-            } else {
-                item.classList.add("is-dimmed");
-                item.classList.remove("is-highlight");
+            var show = itemMatches(item);
+            item.classList.toggle("is-hidden", !show);
+            item.classList.toggle("is-highlight", show && active.length > 0);
+            if (show) count++;
+        });
+        updateGroupTitles();
+
+        // FLIP: animate the still-visible items from their old position.
+        items.forEach(function (item, i) {
+            if (item.classList.contains("is-hidden")) return;
+            var last = item.getBoundingClientRect().top;
+            var delta = first[i] - last;
+            if (delta) {
+                item.animate(
+                    [{ transform: "translateY(" + delta + "px)" }, { transform: "translateY(0)" }],
+                    { duration: 420, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)" }
+                );
             }
         });
 
+        tags.forEach(function (t) {
+            t.classList.toggle("is-active", active.indexOf(t.getAttribute("data-topic")) !== -1);
+        });
+
         if (hint) {
-            var label = tag.textContent.trim();
-            hint.textContent = count +
-                (count === 1 ? " paper" : " papers") +
-                " on " + label + " · click again to reset.";
+            if (!active.length) {
+                hint.textContent = defaultHint;
+            } else {
+                var labels = tags.filter(function (t) {
+                    return active.indexOf(t.getAttribute("data-topic")) !== -1;
+                }).map(function (t) { return t.textContent.trim(); });
+                hint.textContent = count + (count === 1 ? " paper" : " papers") +
+                    " on " + labels.join(" + ") + " · click a topic again or press Esc to reset.";
+            }
         }
+    }
+
+    function reset() {
+        active = [];
+        render();
+    }
+
+    function toggleTopic(topic, additive) {
+        var idx = active.indexOf(topic);
+        if (additive) {
+            if (idx === -1) active.push(topic);
+            else active.splice(idx, 1);
+        } else {
+            // Plain click: if this is the only active topic, clear; else select just it.
+            if (active.length === 1 && idx === 0) active = [];
+            else active = [topic];
+        }
+        render();
     }
 
     tags.forEach(function (tag) {
         tag.setAttribute("role", "button");
         tag.setAttribute("tabindex", "0");
-        tag.addEventListener("click", function () {
-            var topic = tag.getAttribute("data-topic");
-            if (activeTopic === topic) { resetState(); }
-            else { activate(topic, tag); }
+        tag.addEventListener("click", function (e) {
+            toggleTopic(tag.getAttribute("data-topic"), e.shiftKey);
         });
         tag.addEventListener("keydown", function (e) {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                tag.click();
+                toggleTopic(tag.getAttribute("data-topic"), e.shiftKey);
             }
         });
     });
 
-    // Click outside the tags/publications clears the state.
-    document.addEventListener("click", function (e) {
-        if (activeTopic === null) return;
-        if (e.target.closest(".research-tags") || e.target.closest("#publications")) return;
-        resetState();
-    });
     document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") resetState();
+        if (e.key === "Escape") reset();
     });
 })();
 </script>

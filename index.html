@@ -251,12 +251,43 @@
             margin-bottom: 16px;
         }
         .theme-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 16px;
             box-shadow: 0 1px 0 rgba(24, 34, 48, 0.03);
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.2s, box-shadow 0.25s, transform 0.2s;
         }
+        .theme-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 6px 20px rgba(15, 94, 115, 0.10);
+            transform: translateY(-2px);
+        }
+        .theme-card.is-active {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(15, 94, 115, 0.16);
+        }
+        .theme-card.is-active::before {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; top: 0;
+            height: 3px;
+            border-radius: 6px 6px 0 0;
+            background: var(--accent);
+        }
+        .theme-index {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+        }
+        .theme-card.is-active .theme-index { color: var(--accent); }
         .theme-card h3 {
             font-size: 14.5px;
             font-weight: 700;
@@ -269,24 +300,50 @@
             color: var(--text-secondary);
             line-height: 1.58;
         }
-        .research-tags {
+        .theme-flagships {
+            list-style: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 5px;
+            margin: 10px 0 0;
         }
-        .research-tags .tag {
-            display: inline-block;
-            padding: 4px 10px;
-            background: var(--tag-bg);
-            border-radius: 5px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-        .research-tags .tag:hover {
-            border-color: var(--accent);
+        .theme-flagships li {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: var(--accent-light);
             color: var(--accent);
         }
+        .theme-cta {
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            transition: color 0.2s;
+        }
+        .theme-card:hover .theme-cta,
+        .theme-card.is-active .theme-cta { color: var(--accent); }
+
+        /* Sub-category headings inside the publication list */
+        .pub-subhead {
+            margin: 22px 0 10px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pub-subhead::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        .pub-subhead.is-hidden { display: none; }
 
         /* ========== Publications ========== */
         .pub-item {
@@ -508,34 +565,54 @@
 
         /* ========== Animations ========== */
 
-        /* ========== Topic → Publication Interaction ========== */
+        /* ========== Research Area → Publication Interaction ========== */
         .research-hint {
             font-size: 12.5px;
             color: var(--text-tertiary);
-            margin-bottom: 10px;
             font-style: italic;
+            margin-bottom: 12px;
         }
-        .research-tags .tag {
+        /* Reset button shown in the publications header when a filter is on */
+        .pub-filter-bar {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .pub-filter-bar.is-on { display: flex; }
+        .pub-filter-bar .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 12.5px;
+            font-weight: 500;
+        }
+        @media (prefers-color-scheme: dark) {
+            .pub-filter-bar .chip { color: #0d1418; }
+        }
+        .pub-filter-bar button {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3px 11px;
+            font-family: inherit;
+            font-size: 12.5px;
+            color: var(--text-secondary);
             cursor: pointer;
-            user-select: none;
-            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+            transition: border-color 0.2s, color 0.2s;
         }
-        .research-tags .tag[data-topic]:hover {
+        .pub-filter-bar button:hover {
             border-color: var(--accent);
             color: var(--accent);
         }
-        .research-tags .tag.is-active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(15, 94, 115, 0.28);
-            transform: translateY(-1px);
-        }
-        @media (prefers-color-scheme: dark) {
-            .research-tags .tag.is-active { color: #0d1418; }
-        }
 
-        /* Publication states when one or more topics are active */
+        /* Publication states when an area filter is active */
         .pub-item {
             transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
@@ -638,31 +715,45 @@
     <section id="research">
         <h2><span class="section-icon">Research</span> Research Interests</h2>
         <p class="research-intro">
-            I build data-centric methods and benchmarks for language models that must retrieve, remember, and reason over structured and unstructured knowledge.
+            My work follows one thread — <strong>making AI systems reason reliably over data</strong> — across three layers:
+            keeping what an agent <em>remembers</em> trustworthy, grounding what it <em>answers</em> in retrievable knowledge,
+            and making the underlying <em>data</em> usable in the first place.
         </p>
+        <p class="research-hint" id="research-hint">Click an area to filter the publication list below.</p>
         <div class="theme-grid">
-            <article class="theme-card">
-                <h3>Reliable Retrieval-Augmented Generation</h3>
-                <p>Systems and benchmarks for grounding LLM behavior in external data, knowledge graphs, and verifiable retrieval pipelines.</p>
+            <article class="theme-card" data-area="memory" role="button" tabindex="0">
+                <span class="theme-index">01</span>
+                <h3>Memory &amp; Continual Reliability</h3>
+                <p>Can an agent trust what it remembers? I study how memory goes stale, how to audit it, and how to build it efficiently over long horizons.</p>
+                <ul class="theme-flagships">
+                    <li>STALE</li>
+                    <li>GRAVITY</li>
+                    <li>MemoryCPT</li>
+                </ul>
+                <span class="theme-cta">6 papers →</span>
             </article>
-            <article class="theme-card">
-                <h3>Agent Memory and Long-Horizon Reasoning</h3>
-                <p>Memory structures, freshness checks, and anchoring mechanisms for agents operating across extended conversations and tasks.</p>
+            <article class="theme-card" data-area="knowledge" role="button" tabindex="0">
+                <span class="theme-index">02</span>
+                <h3>Knowledge-Grounded Reasoning</h3>
+                <p>Grounding LLM answers in retrieval and knowledge graphs. Co-organized the <strong>Meta KDD Cup 2024</strong> on <strong>CRAG</strong>; KERAG and CacheRAG push retrieval quality and efficiency.</p>
+                <ul class="theme-flagships">
+                    <li>CRAG</li>
+                    <li>KERAG</li>
+                    <li>CacheRAG</li>
+                </ul>
+                <span class="theme-cta">6 papers →</span>
             </article>
-            <article class="theme-card">
-                <h3>Data Management for AI Systems</h3>
-                <p>Methods for semantic typing, text-to-SQL, taxonomy reasoning, and scientific data interfaces that connect models with real data.</p>
+            <article class="theme-card" data-area="data" role="button" tabindex="0">
+                <span class="theme-index">03</span>
+                <h3>Data Foundations for AI</h3>
+                <p>Making structured and scientific data usable by models — from table understanding and annotation to agentic SQL interfaces.</p>
+                <ul class="theme-flagships">
+                    <li>APEX-SQL</li>
+                    <li>RECA</li>
+                    <li>AI Scientists</li>
+                </ul>
+                <span class="theme-cta">5 papers →</span>
             </article>
-        </div>
-        <p class="research-hint" id="research-hint">Tip: click a topic to filter papers · Shift-click to add more topics.</p>
-        <div class="research-tags">
-            <span class="tag" data-topic="rag">Retrieval-Augmented Generation (RAG)</span>
-            <span class="tag" data-topic="memory">Agent Memory</span>
-            <span class="tag" data-topic="kg">Knowledge Graphs</span>
-            <span class="tag" data-topic="sql">Text-to-SQL</span>
-            <span class="tag" data-topic="mllm">Multimodal LLMs</span>
-            <span class="tag" data-topic="ai4s">AI4S</span>
-            <span class="tag" data-topic="data">Data Management</span>
         </div>
     </section>
 </div>
@@ -675,10 +766,16 @@
         <!-- Note: * = Equal contribution, + = Corresponding author -->
         <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px;">* Equal contribution &nbsp;&nbsp; <sup>+</sup> Corresponding author</p>
 
+        <div class="pub-filter-bar" id="pub-filter-bar">
+            <span>Filtered by</span>
+            <span class="chip" id="pub-filter-chip"></span>
+            <button type="button" id="pub-filter-reset">Show all papers</button>
+        </div>
+
         <!-- Preprints -->
         <h3 class="pub-group-title" style="font-size:14px; color:var(--text-tertiary); margin-bottom:16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Preprints</h3>
 
-        <div class="pub-item" data-topics="memory">
+        <div class="pub-item" data-area="memory" data-sub="Memory Construction & Efficiency">
             <div class="pub-title"><a href="https://arxiv.org/abs/2608.04843" target="_blank">MemoryCPT: An End-to-End Agent Memory Framework for Cost-Performance Trade-off</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -692,7 +789,7 @@
             </div>
         </div>
 
-     <div class="pub-item" data-topics="memory">
+     <div class="pub-item" data-area="memory" data-sub="Memory Staleness & Auditing">
       <div class="pub-title"><a href="https://arxiv.org/abs/2608.04574" target="_blank">When Memory Lies: An Empirical Study of Spatial Memory Staleness in VLM Agents</a></div>
       <div class="pub-meta">
  <span class="pub-venue">Preprint 2026</span>
@@ -706,7 +803,7 @@
      </div>
       </div>
 
-  <div class="pub-item" data-topics="memory">
+  <div class="pub-item" data-area="memory" data-sub="Memory Staleness & Auditing">
           <div class="pub-title"><a href="https://arxiv.org/abs/2608.04570" target="_blank">The Personalization Mirage: How LLMs Fabricate User Profiles, and Why Self-Monitoring Misleads</a></div>
   <div class="pub-meta">
            <span class="pub-venue">Preprint 2026</span>
@@ -720,7 +817,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="ai4s">
+        <div class="pub-item" data-area="data" data-sub="Scientific & Visual Data">
           <div class="pub-title"><a href="https://arxiv.org/abs/2607.11079" target="_blank">Are LLMs Ready for Scientific Discovery? A Capability-Oriented Benchmark for AI Scientists</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -734,7 +831,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="rag memory">
+        <div class="pub-item" data-area="memory" data-sub="Memory Construction & Efficiency">
             <div class="pub-title"><a href="https://arxiv.org/abs/2607.00394" target="_blank">When Classic Cache Policies Fail: Learning-Augmented Replacement for Semantic Retrieval Buffers</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -748,7 +845,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="memory">
+        <div class="pub-item" data-area="memory" data-sub="Memory Staleness & Auditing">
             <div class="pub-title"><a href="https://arxiv.org/abs/2605.06527" target="_blank">STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -762,7 +859,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="memory">
+        <div class="pub-item" data-area="memory" data-sub="Memory Construction & Efficiency">
             <div class="pub-title"><a href="https://arxiv.org/abs/2605.01688" target="_blank">GRAVITY: Architecture-Agnostic Structured Anchoring for Long-Horizon Conversational Memory</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -776,7 +873,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="kg ai4s">
+        <div class="pub-item" data-area="knowledge" data-sub="Knowledge Graph Reasoning">
             <div class="pub-title"><a href="https://arxiv.org/abs/2512.24181" target="_blank">MedKGI: Iterative Differential Diagnosis with Medical Knowledge Graphs and Information-Guided Inquiring</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -790,7 +887,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="rag kg">
+        <div class="pub-item" data-area="knowledge" data-sub="RAG Systems & Benchmarks">
             <div class="pub-title"><a href="https://arxiv.org/abs/2604.26176" target="_blank">CacheRAG: A Semantic Caching System for Retrieval-Augmented Generation in Knowledge Graph Question Answering</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">Preprint 2026</span>
@@ -811,7 +908,7 @@
         <!-- Published -->
         <h3 class="pub-group-title" style="font-size:14px; color:var(--text-tertiary); margin: 28px 0 16px; font-weight:500; text-transform:uppercase; letter-spacing:0.06em;">Published</h3>
 
-        <div class="pub-item" data-topics="kg">
+        <div class="pub-item" data-area="knowledge" data-sub="Knowledge Graph Reasoning">
             <div class="pub-title"><a href="https://arxiv.org/abs/2604.23356" target="_blank">VeriLLMed: Interactive Visual Debugging of Medical Large Language Models with Knowledge Graphs</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">VIS 2026</span>
@@ -825,7 +922,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="mllm">
+        <div class="pub-item" data-area="data" data-sub="Scientific & Visual Data">
             <div class="pub-title"><a href="https://arxiv.org/pdf/2603.28583v2" target="_blank">Navigating the Mirage: A Dual-Path Agentic Framework for Robust Misleading Chart Question Answering</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">MM 2026</span>
@@ -839,7 +936,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="sql data">
+        <div class="pub-item" data-area="data" data-sub="Structured Data Interfaces">
             <div class="pub-title"><a href="https://dl.acm.org/doi/abs/10.1145/3770855.3818075" target="_blank">APEX-SQL: Talking to the Data via Agentic Exploration for Text-to-SQL</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">KDD 2026</span>
@@ -861,7 +958,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="rag kg">
+        <div class="pub-item" data-area="knowledge" data-sub="RAG Systems & Benchmarks">
             <div class="pub-title"><a href="https://arxiv.org/abs/2509.04716" target="_blank">KERAG: Knowledge-Enhanced Retrieval-Augmented Generation for Advanced Question Answering</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">EMNLP 2025</span>
@@ -879,7 +976,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="rag kg">
+        <div class="pub-item" data-area="knowledge" data-sub="RAG Systems & Benchmarks">
             <div class="pub-title"><a href="https://arxiv.org/pdf/2406.04744" target="_blank">CRAG — Comprehensive RAG Benchmark</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">NeurIPS 2024</span>
@@ -897,7 +994,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="kg">
+        <div class="pub-item" data-area="knowledge" data-sub="LLM Knowledge Evaluation">
             <div class="pub-title"><a href="https://www.vldb.org/pvldb/vol17/p2919-sun.pdf" target="_blank">Are Large Language Models a Good Replacement of Taxonomies?</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">VLDB 2024</span>
@@ -919,7 +1016,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="data">
+        <div class="pub-item" data-area="data" data-sub="Data Annotation">
             <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10598166" target="_blank">Cross-domain-aware Worker Selection with Training for Crowdsourced Annotation</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">ICDE 2024</span>
@@ -941,7 +1038,7 @@
             </div>
         </div>
 
-        <div class="pub-item" data-topics="data">
+        <div class="pub-item" data-area="data" data-sub="Table Understanding">
             <div class="pub-title"><a href="https://www.vldb.org/pvldb/vol16/p1319-sun.pdf" target="_blank">RECA: Related Tables Enhanced Column Semantic Type Annotation Framework</a></div>
             <div class="pub-meta">
                 <span class="pub-venue">VLDB 2023</span>
@@ -1039,7 +1136,7 @@
 <!-- Last Updated -->
 <div class="container">
     <div class="visitor-counter">
-        <div>Last updated Aug 15, 2026</div>
+        <div>Last updated Aug 19, 2026</div>
     </div>
 </div>
 
@@ -1052,58 +1149,94 @@
 
 <script>
 (function () {
-    var tags = Array.prototype.slice.call(document.querySelectorAll(".research-tags .tag[data-topic]"));
-    var items = Array.prototype.slice.call(document.querySelectorAll(".pub-item[data-topics]"));
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".theme-card[data-area]"));
+    var items = Array.prototype.slice.call(document.querySelectorAll(".pub-item[data-area]"));
     var groupTitles = Array.prototype.slice.call(document.querySelectorAll(".pub-group-title"));
+    var bar = document.getElementById("pub-filter-bar");
+    var chip = document.getElementById("pub-filter-chip");
+    var resetBtn = document.getElementById("pub-filter-reset");
     var hint = document.getElementById("research-hint");
     var defaultHint = hint ? hint.textContent : "";
-    var active = [];   // list of active topic strings (multi-select)
+    var listEl = items.length ? items[0].parentNode : null;
+    var activeArea = null;
 
-    if (!tags.length || !items.length) return;
+    if (!cards.length || !items.length || !listEl) return;
 
-    function itemTopics(item) {
-        return (item.getAttribute("data-topics") || "").split(/\s+/);
-    }
-    // A paper shows if it matches ANY active topic (OR / union).
-    function itemMatches(item) {
-        if (!active.length) return true;
-        var topics = itemTopics(item);
-        for (var i = 0; i < active.length; i++) {
-            if (topics.indexOf(active[i]) !== -1) return true;
-        }
-        return false;
-    }
+    // Remember the original DOM order so we can restore it on reset.
+    var originalOrder = Array.prototype.slice.call(listEl.children);
 
-    // Hide a group heading when none of the papers following it are visible.
-    function updateGroupTitles() {
-        groupTitles.forEach(function (title) {
-            var node = title.nextElementSibling;
-            var anyVisible = false;
-            while (node && !node.classList.contains("pub-group-title")) {
-                if (node.classList.contains("pub-item") && !node.classList.contains("is-hidden")) {
-                    anyVisible = true;
-                    break;
-                }
-                node = node.nextElementSibling;
+    function areaLabel(area) {
+        for (var i = 0; i < cards.length; i++) {
+            if (cards[i].getAttribute("data-area") === area) {
+                return cards[i].querySelector("h3").textContent.trim();
             }
-            title.classList.toggle("is-hidden", !anyVisible);
+        }
+        return area;
+    }
+
+    function clearSubheads() {
+        Array.prototype.forEach.call(
+            listEl.querySelectorAll(".pub-subhead"),
+            function (el) { el.parentNode.removeChild(el); }
+        );
+    }
+
+    // Restore the untouched publication list (Preprints / Published grouping).
+    function restoreOriginal() {
+        clearSubheads();
+        originalOrder.forEach(function (node) { listEl.appendChild(node); });
+        items.forEach(function (it) {
+            it.classList.remove("is-hidden", "is-highlight");
         });
+        groupTitles.forEach(function (t) { t.classList.remove("is-hidden"); });
+    }
+
+    // Show only one area, regrouped under sub-category headings.
+    function renderArea(area) {
+        clearSubheads();
+        // Hide the Preprints / Published headings — sub-categories replace them.
+        groupTitles.forEach(function (t) { t.classList.add("is-hidden"); });
+
+        var subs = [];
+        var bySub = {};
+        items.forEach(function (item) {
+            if (item.getAttribute("data-area") !== area) {
+                item.classList.add("is-hidden");
+                item.classList.remove("is-highlight");
+                return;
+            }
+            item.classList.remove("is-hidden");
+            item.classList.add("is-highlight");
+            var sub = item.getAttribute("data-sub") || "Other";
+            if (!bySub[sub]) { bySub[sub] = []; subs.push(sub); }
+            bySub[sub].push(item);
+        });
+
+        // Re-append in sub-category order, inserting a heading before each block.
+        subs.forEach(function (sub) {
+            var h = document.createElement("div");
+            h.className = "pub-subhead";
+            h.textContent = sub;
+            listEl.appendChild(h);
+            bySub[sub].forEach(function (item) { listEl.appendChild(item); });
+        });
+
+        return subs.reduce(function (n, s) { return n + bySub[s].length; }, 0);
     }
 
     function render() {
-        // FLIP: record positions before layout change.
+        // FLIP: record positions before the layout changes.
         var first = items.map(function (it) { return it.getBoundingClientRect().top; });
 
-        var count = 0;
-        items.forEach(function (item) {
-            var show = itemMatches(item);
-            item.classList.toggle("is-hidden", !show);
-            item.classList.toggle("is-highlight", show && active.length > 0);
-            if (show) count++;
-        });
-        updateGroupTitles();
+        var count;
+        if (activeArea === null) {
+            restoreOriginal();
+            count = items.length;
+        } else {
+            count = renderArea(activeArea);
+        }
 
-        // FLIP: animate the still-visible items from their old position.
+        // FLIP: animate visible items from their previous position.
         items.forEach(function (item, i) {
             if (item.classList.contains("is-hidden")) return;
             var last = item.getBoundingClientRect().top;
@@ -1116,57 +1249,55 @@
             }
         });
 
-        tags.forEach(function (t) {
-            t.classList.toggle("is-active", active.indexOf(t.getAttribute("data-topic")) !== -1);
+        cards.forEach(function (c) {
+            c.classList.toggle("is-active", c.getAttribute("data-area") === activeArea);
         });
 
-        if (hint) {
-            if (!active.length) {
-                hint.textContent = defaultHint;
-            } else {
-                var labels = tags.filter(function (t) {
-                    return active.indexOf(t.getAttribute("data-topic")) !== -1;
-                }).map(function (t) { return t.textContent.trim(); });
-                hint.textContent = count + (count === 1 ? " paper" : " papers") +
-                    " on " + labels.join(" + ") + " · click a topic again or press Esc to reset.";
-            }
-        }
-    }
-
-    function reset() {
-        active = [];
-        render();
-    }
-
-    function toggleTopic(topic, additive) {
-        var idx = active.indexOf(topic);
-        if (additive) {
-            if (idx === -1) active.push(topic);
-            else active.splice(idx, 1);
+        if (activeArea === null) {
+            if (bar) bar.classList.remove("is-on");
+            if (hint) hint.textContent = defaultHint;
         } else {
-            // Plain click: if this is the only active topic, clear; else select just it.
-            if (active.length === 1 && idx === 0) active = [];
-            else active = [topic];
+            if (bar) bar.classList.add("is-on");
+            if (chip) chip.textContent = areaLabel(activeArea) + " · " + count +
+                (count === 1 ? " paper" : " papers");
+            if (hint) hint.textContent = "Showing " + areaLabel(activeArea) +
+                " · click the card again or press Esc to show all.";
         }
-        render();
     }
 
-    tags.forEach(function (tag) {
-        tag.setAttribute("role", "button");
-        tag.setAttribute("tabindex", "0");
-        tag.addEventListener("click", function (e) {
-            toggleTopic(tag.getAttribute("data-topic"), e.shiftKey);
+    function selectArea(area) {
+        activeArea = (activeArea === area) ? null : area;
+        render();
+        if (activeArea !== null) {
+            var pubs = document.getElementById("publications");
+            if (pubs) pubs.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }
+
+    cards.forEach(function (card) {
+        card.addEventListener("click", function () {
+            selectArea(card.getAttribute("data-area"));
         });
-        tag.addEventListener("keydown", function (e) {
+        card.addEventListener("keydown", function (e) {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                toggleTopic(tag.getAttribute("data-topic"), e.shiftKey);
+                selectArea(card.getAttribute("data-area"));
             }
         });
     });
 
+    if (resetBtn) {
+        resetBtn.addEventListener("click", function () {
+            activeArea = null;
+            render();
+        });
+    }
+
     document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") reset();
+        if (e.key === "Escape" && activeArea !== null) {
+            activeArea = null;
+            render();
+        }
     });
 })();
 </script>
